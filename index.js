@@ -20,7 +20,11 @@ const pool = new Pool({
       : false,
   });
 
-// Simulasi database pengguna
+app.get('/', (req, res) => {
+  res.send('MentzerTrack Backend is running!');
+});
+
+
 const users = [];
 
 // Middleware untuk validasi token JWT
