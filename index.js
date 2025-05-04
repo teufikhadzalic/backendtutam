@@ -12,6 +12,15 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+
+const corsOptions = {
+  origin: ["tutam-frontend-teufik.vercel.app"], //plss kerja
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+
 // PostgreSQL pool setup for Neon
 const pool = new Pool({
     connectionString: process.env.PG_CONNECTION_STRING,
