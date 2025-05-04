@@ -24,16 +24,7 @@ const pool = new Pool({
 const users = [];
 
 // Middleware untuk validasi token JWT
-const authenticateToken = (req, res, next) => {
-  const token = req.headers['authorization']?.split(' ')[1];
-  if (!token) return res.status(401).json({ error: 'Access denied. No token provided.' });
 
-  jwt.verify(token, 'secret_key', (err, user) => {
-    if (err) return res.status(403).json({ error: 'Invalid token.' });
-    req.user = user;
-    next();
-  });
-};
 
 // Root endpoint
 app.get('/', (req, res) => {
