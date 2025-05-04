@@ -115,7 +115,10 @@ app.get('/programs', async (req, res) => {
 app.post('/programs', async (req, res) => {
   const { title, goal, exercises } = req.body;
 
+  console.log("Request body:", req.body); // Log data yang diterima
+
   if (!title || !goal || !Array.isArray(exercises)) {
+    console.error("Invalid input:", { title, goal, exercises }); // Log input tidak valid
     return res.status(400).json({ error: 'Invalid input. Title, goal, and exercises are required.' });
   }
 
@@ -129,9 +132,12 @@ app.post('/programs', async (req, res) => {
     );
 
     const program = insertProgram.rows[0];
+    console.log("Program created:", program); // Log program yang dibuat
+
     const programId = program.id;
 
     for (const ex of exercises) {
+      console.log("Inserting exercise:", ex); // Log setiap exercise
       await client.query(
         'INSERT INTO exercises(program_id, name, reps, type) VALUES($1, $2, $3, $4)',
         [programId, ex.name, ex.reps, ex.type]
@@ -143,7 +149,7 @@ app.post('/programs', async (req, res) => {
 
     res.status(201).json({ message: 'Program created successfully', program });
   } catch (err) {
-    console.error('Error during program creation:', err);
+    console.error("Error during program creation:", err); // Log error
     res.status(500).json({ error: 'Failed to create program' });
   }
 });
