@@ -53,6 +53,22 @@ app.get('/', (req, res) => {
   res.send('MentzerTrack Backend is running!');
 });
 
+
+
+
+//user get all
+app.get('/user', (req, res) => {
+  try {
+   
+    const safeUsers = users.map(({ password, ...userWithoutPassword }) => userWithoutPassword);
+
+    res.json(safeUsers);
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+});
+
 // User Authentication Endpoints
 app.post('/user/register', async (req, res) => {
   const { name, email, password } = req.body;
